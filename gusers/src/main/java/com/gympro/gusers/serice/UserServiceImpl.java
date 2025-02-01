@@ -8,6 +8,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.gympro.gusers.api.services.ApiService;
 import com.gympro.gusers.dto.AddMemberDTO;
 import com.gympro.gusers.dto.AuthRequest;
 import com.gympro.gusers.dto.MemSummry;
@@ -34,6 +35,9 @@ public class UserServiceImpl implements UserService{
 	
 	@Autowired
 	MemberPlanSaveRepository memPlanRepo;
+	
+	@Autowired
+	ApiService apiService;
 	
 	@Autowired
 	JwtService jwtService;
@@ -100,6 +104,15 @@ public class UserServiceImpl implements UserService{
 		Members members=memRepo.findByUsername(username);
 		MemberPlan memPlan=null;
 		AddMemberDTO response= null;
+		
+		try {
+			apiService.getApiResponse("http://localhost:8090/gymbook/plans/view/AI");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 		if(members!=null) {
 			memPlan=memPlanRepo.findById(members.getMemberPlan().getId()).get();
 			 response=AddMemberDTO.builder().name(members.getName())

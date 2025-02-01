@@ -4,9 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.stereotype.Component;
-
 import com.gympro.gcloud_gateway.util.JwtUtil;
 
 @Component
@@ -27,7 +25,7 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
     @Override
     public GatewayFilter apply(Config config) {
         return ((exchange, chain) -> {
-            if (validator.isSecured.test((ServerHttpRequest) exchange.getRequest())) {
+            if (validator.isSecured.test(exchange.getRequest())) {
                 //header contains token or not
                 if (!exchange.getRequest().getHeaders().containsKey(HttpHeaders.AUTHORIZATION)) {
                     throw new RuntimeException("missing authorization header");

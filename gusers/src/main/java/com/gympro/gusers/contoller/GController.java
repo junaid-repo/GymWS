@@ -76,6 +76,9 @@ public class GController {
 		return ResponseEntity.status(HttpStatus.FOUND).body(serv.viewMemberDetails(username));
 
 	}
+	
+	
+
 	@GetMapping("/user/member/view/all")
 	ResponseEntity<List<MemSummry>> viewAllMember() {
 

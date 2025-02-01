@@ -10,10 +10,15 @@ spring:
           uri: lb://gusers-service
           predicates:
             - Path=/gymbook/user/**
+          filters:
+           - AuthenticationFilter            
+            
         - id: gplans-service
           uri: lb://gplans-service
           predicates:
             - Path=/gymbook/plans/**
+          filters:
+           - AuthenticationFilter        
  
 eureka:
   client:
