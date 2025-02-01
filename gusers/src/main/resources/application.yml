@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: gusers-service
+  config:
+    import: "optional:configserver:http://localhost:8088"
+springdoc:
+  api-docs:
+    path: /gymbook/auth/api-docs
+  swagger-ui:
+    path: /gymbook/auth/swagger-ui-custom.html
