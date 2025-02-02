@@ -1,5 +1,8 @@
 server:
    port: 9900
+   api:
+     username: king02102
+     password: aa
       
 spring:
      datasource:

@@ -2,9 +2,11 @@ package com.gympro.gusers.serice;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -102,35 +104,32 @@ public class UserServiceImpl implements UserService{
 	public AddMemberDTO viewMemberDetails(String username) {
 		
 		Members members=memRepo.findByUsername(username);
-		MemberPlan memPlan=null;
-		AddMemberDTO response= null;
-		
+		MemberPlan memPlan = null;
+		AddMemberDTO response = null;
+
 		try {
-			apiService.getApiResponse("http://localhost:8090/gymbook/plans/view/AI");
+			CompletableFuture<String> planDetails = apiService
+					.getApiResponse("http://localhost:8090/gymbook/plans/view/AI");
+			System.out.println(planDetails.get());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		if(members!=null) {
-			memPlan=memPlanRepo.findById(members.getMemberPlan().getId()).get();
-			 response=AddMemberDTO.builder().name(members.getName())
-					.gender(members.getGender())
-					.email(members.getEmail())
-					.phone(members.getPhoneNumber())
-					.dob(members.getDob())
+
+		if (members != null) {
+			memPlan = memPlanRepo.findById(members.getMemberPlan().getId()).get();
+			response = AddMemberDTO.builder().name(members.getName()).gender(members.getGender())
+					.email(members.getEmail()).phone(members.getPhoneNumber()).dob(members.getDob())
 					.address(members.getAddresss())
 					.planDetails(PlanDetails.builder().planId(String.valueOf(memPlan.getPlanId()))
-							.joiningDate(memPlan.getJoiningDate())
-							.paidAmount(memPlan.getPaidAmount())
-							.dueAmount(memPlan.getDueAmount()).build()).build();
-			
+							.joiningDate(memPlan.getJoiningDate()).paidAmount(memPlan.getPaidAmount())
+							.dueAmount(memPlan.getDueAmount()).build())
+					.build();
+
 			return response;
-							
+
 		}
-		
-		
+
 		return response;
 	}
 	@Override

@@ -14,10 +14,10 @@ public interface UserService {
 
 	String generateToken(AuthRequest creds);
 
- public	String addMember(AddMemberDTO request);
+	public String addMember(AddMemberDTO request);
 
-public AddMemberDTO viewMemberDetails(String username);
+	public AddMemberDTO viewMemberDetails(String username);
 
-List<MemSummry> viewAllMembers();
+	List<MemSummry> viewAllMembers();
 
 }
