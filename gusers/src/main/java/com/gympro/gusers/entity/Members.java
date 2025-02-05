@@ -34,7 +34,7 @@ public class Members {
 	private String addresss;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="memberPlanId", referencedColumnName = "id")
+	@JoinColumn(name="memPlanId", referencedColumnName = "memberPlanId")
 	private MemberPlan memberPlan;
 
 }

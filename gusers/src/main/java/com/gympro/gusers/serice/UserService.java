@@ -1,6 +1,7 @@
 package com.gympro.gusers.serice;
 
 import java.util.List;
+import java.util.Map;
 
 import com.gympro.gusers.dto.AddMemberDTO;
 import com.gympro.gusers.dto.AuthRequest;
@@ -19,5 +20,7 @@ public interface UserService {
 	public AddMemberDTO viewMemberDetails(String username);
 
 	List<MemSummry> viewAllMembers();
+
+	Map<String, Object> searchMembers(Map<String, Object> request);
 
 }

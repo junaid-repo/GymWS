@@ -1,12 +1,14 @@
 package com.gympro.gusers.serice;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -152,6 +154,48 @@ public class UserServiceImpl implements UserService{
 			}
 		});
 		return response;
+	}
+
+	@Override
+	public Map<String, Object> searchMembers(Map<String, Object> request) {
+		
+		String searchType=(String) request.get("searchType");
+		
+		Map<String, Object> response= new HashMap<>();
+		
+		
+		if(searchType.equals("expired")){
+			LocalDate expirationDate=LocalDate.now().minusDays(30);
+			System.out.println("currentDate--> "+expirationDate);
+			List<Members> memList=memRepo.getExpiredOrders(expirationDate);
+			
+			response.put("Expired Member Lists", memList);
+			
+			return response;
+			
+		}
+		if(searchType.equals("dueAmount")){
+			LocalDate expirationDate=LocalDate.now().minusDays(30);
+			System.out.println("currentDate--> "+expirationDate);
+			Long dueAmount=memPlanRepo.getDueAmount();
+			
+			response.put("Due Amount", dueAmount);
+			
+			return response;
+			
+		}
+		if(searchType.equals("totalCollection")){
+			LocalDate expirationDate=LocalDate.now().minusDays(30);
+			System.out.println("currentDate--> "+expirationDate);
+			Long collections=memPlanRepo.getTotalCollection();
+			
+			response.put("Total Collection", collections);
+			
+			return response;
+			
+		}
+		
+		return null;
 	}
 
 }
