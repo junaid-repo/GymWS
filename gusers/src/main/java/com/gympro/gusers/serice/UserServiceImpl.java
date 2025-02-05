@@ -157,17 +157,28 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public Map<String, Object> searchMembers(Map<String, Object> request) {
+	public Map<String, Object> searchMembers(String searchType) {
 		
-		String searchType=(String) request.get("searchType");
+		//String searchType=(String) request.get("searchType");
 		
 		Map<String, Object> response= new HashMap<>();
 		
 		
-		if(searchType.equals("expired")){
+		if(searchType.equals("expiredmembers")){
 			LocalDate expirationDate=LocalDate.now().minusDays(30);
 			System.out.println("currentDate--> "+expirationDate);
-			List<Members> memList=memRepo.getExpiredOrders(expirationDate);
+			List<Members> memList=memRepo.getExpiredMembers(expirationDate);
+			
+			response.put("Expired Member Lists", memList);
+			
+			return response;
+			
+		}
+		
+		if(searchType.equals("activeMembers")){
+			LocalDate expirationDate=LocalDate.now().minusDays(30);
+			System.out.println("currentDate--> "+expirationDate);
+			List<Members> memList=memRepo.getActiveMembers(expirationDate);
 			
 			response.put("Expired Member Lists", memList);
 			

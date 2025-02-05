@@ -89,10 +89,10 @@ public class GController {
 
 	}
 	
-	@GetMapping("/user/member/search")
-	ResponseEntity<Map<String, Object>> searchMembers(@RequestBody Map<String, Object> request){
+	@GetMapping("/user/member/search/{type}")
+	ResponseEntity<Map<String, Object>> searchMembers(@PathVariable String  type){
 		
-		Map<String, Object> response=serv.searchMembers(request);
+		Map<String, Object> response=serv.searchMembers(type);
 		
 		return ResponseEntity.status(HttpStatus.FOUND).body(response);
 	}

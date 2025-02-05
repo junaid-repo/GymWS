@@ -21,6 +21,6 @@ public interface UserService {
 
 	List<MemSummry> viewAllMembers();
 
-	Map<String, Object> searchMembers(Map<String, Object> request);
+	Map<String, Object> searchMembers(String type);
 
 }

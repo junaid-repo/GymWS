@@ -14,8 +14,10 @@ public interface MemberSaveRepository extends JpaRepository<Members, Integer>{
 
 	
 	@Query(value="select * from members m, memberplan mp where m.mem_plan_id=mp.member_plan_id and mp.joining_date<?1", nativeQuery=true)
-	List<Members> getExpiredOrders(LocalDate expirationDate);
+	List<Members> getExpiredMembers(LocalDate expirationDate);
 	
+	@Query(value="select * from members m, memberplan mp where m.mem_plan_id=mp.member_plan_id and mp.joining_date>=?1", nativeQuery=true)
+	List<Members> getActiveMembers(LocalDate expirationDate);
 	
 
 }
