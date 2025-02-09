@@ -1,20 +1,21 @@
 server:
   port: 9092
 spring:
-  datasource:
-    username: postgres
-    url: jdbc:postgresql://localhost:5432/gymbook
-    password: postgres
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: 'true'
+     datasource:
+        password: ${POSTGRESDBPASSWORD}
+        username: ${POSTGRESDBUSER}
+        url: ${POSTGRESDBURL}
+     jpa:
+       hibernate:
+         ddl-auto: update
+       show-sql: true
+       
 eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka/
-    fetch-registry: 'true'
-    register-with-eureka: 'true'
-  instance:
-    hostname: localhost
+   instance:
+     hostname: localhost
+   client:
+     register-with-eureka: 'true'
+     service-url:
+       defaultZone: http://host.docker.internal:8761/eureka/
+     fetch-registry: 'true'
 
